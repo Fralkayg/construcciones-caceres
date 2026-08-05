@@ -1,8 +1,14 @@
+import Box from '@mui/material/Box'
+import Paper from '@mui/material/Paper'
+import Stack from '@mui/material/Stack'
+import TextField from '@mui/material/TextField'
+import Button from '@mui/material/Button'
+import IconButton from '@mui/material/IconButton'
+import Typography from '@mui/material/Typography'
+import AddIcon from '@mui/icons-material/Add'
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutlined'
 import type { Partida } from '../../types'
 import { makeId } from '../../lib/format'
-
-const inputClass =
-  'w-full rounded-md border border-brand-navy/20 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-gold'
 
 interface Props {
   partidas: Partida[]
@@ -42,80 +48,87 @@ export default function PartidasEditor({ partidas, onChange }: Props) {
   }
 
   return (
-    <div className="space-y-5">
+    <Stack spacing={2.5}>
       {partidas.map((p, idx) => (
-        <div key={p.id} className="rounded-lg border border-brand-navy/15 bg-white p-4">
-          <div className="flex items-start gap-3 mb-3">
-            <span className="mt-2 text-sm font-semibold text-brand-navy/60 shrink-0">
+        <Paper key={p.id} variant="outlined" sx={{ p: 2.5 }}>
+          <Stack direction="row" spacing={1.5} sx={{ alignItems: 'flex-start', mb: 2 }}>
+            <Typography
+              variant="body2"
+              sx={{ mt: 1.75, fontWeight: 700, color: 'text.secondary', flexShrink: 0 }}
+            >
               Partida {idx + 1}
-            </span>
-            <input
-              className={inputClass}
+            </Typography>
+            <TextField
+              fullWidth
+              size="small"
               placeholder="Título de la partida (ej: Demolición de muretes y despeje)"
               value={p.titulo}
               onChange={(e) => updatePartida(p.id, { titulo: e.target.value })}
             />
             {partidas.length > 1 && (
-              <button
-                type="button"
+              <IconButton
                 onClick={() => removePartida(p.id)}
-                className="shrink-0 text-sm text-red-600 hover:text-red-800 px-2 py-2"
                 aria-label="Eliminar partida"
+                color="error"
+                size="small"
               >
-                Eliminar
-              </button>
+                <DeleteOutlineIcon fontSize="small" />
+              </IconButton>
             )}
-          </div>
+          </Stack>
 
-          <div className="space-y-2 pl-0 sm:pl-4">
+          <Stack spacing={1.25} sx={{ pl: { xs: 0, sm: 5 } }}>
             {p.items.map((item, i) => (
-              <div key={i} className="flex items-center gap-2">
-                <span className="text-brand-gold-dark">•</span>
-                <input
-                  className={inputClass}
+              <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }} key={i}>
+                <Typography sx={{ color: 'secondary.dark' }}>•</Typography>
+                <TextField
+                  fullWidth
+                  size="small"
                   placeholder="Detalle del trabajo a realizar"
                   value={item}
                   onChange={(e) => updateItem(p.id, i, e.target.value)}
                 />
                 {p.items.length > 1 && (
-                  <button
-                    type="button"
+                  <IconButton
                     onClick={() => removeItem(p.id, i)}
-                    className="shrink-0 text-red-600 hover:text-red-800 px-2"
                     aria-label="Eliminar ítem"
+                    size="small"
                   >
-                    ✕
-                  </button>
+                    <DeleteOutlineIcon fontSize="small" />
+                  </IconButton>
                 )}
-              </div>
+              </Stack>
             ))}
-            <button
-              type="button"
+            <Button
+              size="small"
+              startIcon={<AddIcon />}
               onClick={() => addItem(p.id)}
-              className="text-sm font-medium text-brand-navy hover:text-brand-gold-dark"
+              sx={{ alignSelf: 'flex-start' }}
             >
-              + Agregar detalle
-            </button>
-          </div>
+              Agregar detalle
+            </Button>
+          </Stack>
 
-          <div className="mt-3 pl-0 sm:pl-4">
-            <input
-              className={inputClass}
+          <Box sx={{ pl: { xs: 0, sm: 5 }, mt: 1.5 }}>
+            <TextField
+              fullWidth
+              size="small"
               placeholder="Nota opcional (ej: Los sacos de escombros se dejarán acopiados en el exterior)"
               value={p.nota}
               onChange={(e) => updatePartida(p.id, { nota: e.target.value })}
             />
-          </div>
-        </div>
+          </Box>
+        </Paper>
       ))}
 
-      <button
-        type="button"
+      <Button
+        variant="outlined"
+        startIcon={<AddIcon />}
         onClick={addPartida}
-        className="rounded-md border border-dashed border-brand-navy/30 px-4 py-2 text-sm font-medium text-brand-navy hover:bg-brand-navy/5"
+        sx={{ alignSelf: 'flex-start', borderStyle: 'dashed' }}
       >
-        + Agregar partida
-      </button>
-    </div>
+        Agregar partida
+      </Button>
+    </Stack>
   )
 }

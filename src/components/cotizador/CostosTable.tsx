@@ -1,8 +1,15 @@
+import Box from '@mui/material/Box'
+import Stack from '@mui/material/Stack'
+import TextField from '@mui/material/TextField'
+import Button from '@mui/material/Button'
+import IconButton from '@mui/material/IconButton'
+import Typography from '@mui/material/Typography'
+import Divider from '@mui/material/Divider'
+import InputAdornment from '@mui/material/InputAdornment'
+import AddIcon from '@mui/icons-material/Add'
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutlined'
 import type { CostoItem } from '../../types'
 import { makeId, formatCLP } from '../../lib/format'
-
-const inputClass =
-  'w-full rounded-md border border-brand-navy/20 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-gold'
 
 interface Props {
   costos: CostoItem[]
@@ -26,67 +33,82 @@ export default function CostosTable({ costos, onChange }: Props) {
   }
 
   return (
-    <div className="space-y-3">
-      <div className="hidden sm:grid grid-cols-[70px_1fr_140px_36px] gap-2 px-1 text-xs font-semibold text-brand-navy/60 uppercase">
-        <span>Ítem</span>
-        <span>Descripción</span>
-        <span>Valor (CLP)</span>
-        <span />
-      </div>
+    <Stack spacing={1.5}>
+      <Box
+        sx={{
+          display: { xs: 'none', sm: 'grid' },
+          gridTemplateColumns: '70px 1fr 160px 40px',
+          gap: 1,
+          px: 0.5,
+        }}
+      >
+        {['Ítem', 'Descripción', 'Valor (CLP)', ''].map((label) => (
+          <Typography key={label} variant="caption" sx={{ fontWeight: 700, color: 'text.secondary' }}>
+            {label}
+          </Typography>
+        ))}
+      </Box>
 
       {costos.map((c) => (
-        <div
+        <Box
           key={c.id}
-          className="grid grid-cols-1 sm:grid-cols-[70px_1fr_140px_36px] gap-2 items-center"
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: { xs: '1fr', sm: '70px 1fr 160px 40px' },
+            gap: 1,
+            alignItems: 'center',
+          }}
         >
-          <input
-            className={inputClass}
+          <TextField
+            size="small"
             value={c.numero}
             onChange={(e) => update(c.id, { numero: e.target.value })}
           />
-          <input
-            className={inputClass}
+          <TextField
+            size="small"
+            fullWidth
             placeholder="Descripción de la partida"
             value={c.descripcion}
             onChange={(e) => update(c.id, { descripcion: e.target.value })}
           />
-          <input
-            className={inputClass}
+          <TextField
+            size="small"
             type="number"
-            min={0}
-            step={1000}
             placeholder="0"
             value={c.valor || ''}
             onChange={(e) => update(c.id, { valor: Number(e.target.value) })}
+            slotProps={{
+              input: { startAdornment: <InputAdornment position="start">$</InputAdornment> },
+            }}
           />
           {costos.length > 1 ? (
-            <button
-              type="button"
-              onClick={() => removeRow(c.id)}
-              className="text-red-600 hover:text-red-800 justify-self-start sm:justify-self-center"
-              aria-label="Eliminar fila"
-            >
-              ✕
-            </button>
+            <IconButton onClick={() => removeRow(c.id)} aria-label="Eliminar fila" size="small">
+              <DeleteOutlineIcon fontSize="small" />
+            </IconButton>
           ) : (
-            <span />
+            <Box />
           )}
-        </div>
+        </Box>
       ))}
 
-      <button
-        type="button"
+      <Button
+        variant="outlined"
+        startIcon={<AddIcon />}
         onClick={addRow}
-        className="rounded-md border border-dashed border-brand-navy/30 px-4 py-2 text-sm font-medium text-brand-navy hover:bg-brand-navy/5"
+        sx={{ alignSelf: 'flex-start', borderStyle: 'dashed' }}
       >
-        + Agregar ítem
-      </button>
+        Agregar ítem
+      </Button>
 
-      <div className="flex justify-end pt-2 border-t border-brand-navy/10">
-        <p className="text-sm font-semibold text-brand-navy">
-          TOTAL: <span className="text-base">{formatCLP(total)}</span>
-        </p>
-      </div>
-    </div>
+      <Divider sx={{ mt: 1 }} />
+      <Stack direction="row" sx={{ justifyContent: 'flex-end' }}>
+        <Typography sx={{ fontWeight: 700, color: 'primary.main' }}>
+          TOTAL:&nbsp;
+          <Typography component="span" variant="h6" sx={{ fontWeight: 800 }}>
+            {formatCLP(total)}
+          </Typography>
+        </Typography>
+      </Stack>
+    </Stack>
   )
 }
