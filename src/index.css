@@ -1,18 +1,19 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: system-ui, "Segoe UI", Roboto, sans-serif;
-  --font-serif: Georgia, "Times New Roman", serif;
+  --font-sans: "Segoe UI", Roboto, system-ui, Helvetica, Arial, sans-serif;
 
-  /* Brand palette pulled from the Construcciones Cáceres logo */
-  --color-brand-navy: #1f3a5c;
-  --color-brand-navy-dark: #142944;
-  --color-brand-navy-light: #2f5480;
-  --color-brand-gold: #d4a13d;
-  --color-brand-gold-dark: #b9862a;
-  --color-brand-cream: #f6f1e6;
-  --color-brand-cream-dark: #ece3cf;
-  --color-brand-ink: #201c14;
+  /* "Refined navy & amber" — kept in sync with src/theme.ts (MUI palette) */
+  --color-brand-navy: #142236;
+  --color-brand-navy-dark: #0b131f;
+  --color-brand-navy-light: #22375a;
+  --color-brand-amber: #f2a93b;
+  --color-brand-amber-dark: #d98f1f;
+  --color-brand-bg: #f6f7f9;
+  --color-brand-surface: #ffffff;
+  --color-brand-border: #e3e6eb;
+  --color-brand-ink: #1a1f29;
+  --color-brand-muted: #5b6472;
 }
 
 html {
@@ -21,7 +22,5 @@ html {
 
 body {
   margin: 0;
-  color: var(--color-brand-ink);
-  background: var(--color-brand-cream);
   font-family: var(--font-sans);
 }
