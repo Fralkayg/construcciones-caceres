@@ -4,9 +4,10 @@ Sitio web para Construcciones Cáceres: una página pública con la
 presentación del emprendimiento y los servicios, más una herramienta
 interna para generar presupuestos (cotizaciones) en PDF.
 
-Hecho con React + TypeScript + Vite, Tailwind CSS y
-[@react-pdf/renderer](https://react-pdf.org/) para generar los PDF
-directamente en el navegador (no hay backend ni base de datos).
+Hecho con React + TypeScript + Vite, Tailwind CSS + MUI (Material UI)
+para los componentes, y [@react-pdf/renderer](https://react-pdf.org/)
+para generar los PDF directamente en el navegador (no hay backend ni
+base de datos).
 
 ## Estructura
 
@@ -51,6 +52,12 @@ Netlify, GitHub Pages o cualquier hosting de archivos estáticos.
 ## Personalización rápida
 
 - **Textos, contacto, servicios**: `src/siteConfig.ts`
-- **Colores de marca**: `src/index.css` (bloque `@theme`)
-- **Logo**: `src/assets/logo.png`
+- **Colores de marca** ("navy & amber"): `src/theme.ts` (tema de MUI) y
+  `src/index.css` (mismos tokens para Tailwind, bloque `@theme`) —
+  mantener ambos en sync si se cambia la paleta.
+- **Logo**: es un ícono vectorial (no una imagen), definido una sola
+  vez en `src/assets/logoShape.ts` y usado tanto por
+  `src/components/Logo.tsx` (web) como por `src/pdf/CotizacionDocument.tsx`
+  (PDF), así que ambos quedan siempre iguales. `public/favicon.svg` es
+  una copia estática del mismo dibujo para el ícono de la pestaña.
 - **Plantilla del PDF**: `src/pdf/CotizacionDocument.tsx`
