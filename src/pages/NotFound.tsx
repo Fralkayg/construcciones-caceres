@@ -1,18 +1,32 @@
-import { Link } from 'react-router-dom'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import Button from '@mui/material/Button'
+import { Link as RouterLink } from 'react-router-dom'
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-brand-cream text-brand-navy px-4 text-center">
-      <h1 className="font-serif text-4xl font-bold mb-3">Página no encontrada</h1>
-      <p className="text-brand-ink/70 mb-6">
+    <Box
+      sx={{
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        bgcolor: 'background.default',
+        color: 'primary.main',
+        px: 3,
+        textAlign: 'center',
+      }}
+    >
+      <Typography variant="h3" sx={{ mb: 2 }}>
+        Página no encontrada
+      </Typography>
+      <Typography color="text.secondary" sx={{ mb: 4 }}>
         La página que buscas no existe o fue movida.
-      </p>
-      <Link
-        to="/"
-        className="rounded-full bg-brand-gold px-6 py-3 font-semibold text-brand-navy-dark hover:bg-brand-gold-dark transition-colors"
-      >
+      </Typography>
+      <Button component={RouterLink} to="/" variant="contained" color="secondary" size="large">
         Volver al inicio
-      </Link>
-    </div>
+      </Button>
+    </Box>
   )
 }

@@ -1,5 +1,18 @@
 import { useState } from 'react'
-import logo from '../assets/logo.png'
+import AppBar from '@mui/material/AppBar'
+import Toolbar from '@mui/material/Toolbar'
+import Container from '@mui/material/Container'
+import Box from '@mui/material/Box'
+import Stack from '@mui/material/Stack'
+import Typography from '@mui/material/Typography'
+import Button from '@mui/material/Button'
+import IconButton from '@mui/material/IconButton'
+import Drawer from '@mui/material/Drawer'
+import List from '@mui/material/List'
+import ListItemButton from '@mui/material/ListItemButton'
+import ListItemText from '@mui/material/ListItemText'
+import MenuIcon from '@mui/icons-material/Menu'
+import Logo from './Logo'
 import { siteConfig } from '../siteConfig'
 
 const links = [
@@ -12,73 +25,72 @@ export default function Header() {
   const [open, setOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-50 bg-brand-cream/95 backdrop-blur border-b border-brand-cream-dark">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="flex h-16 items-center justify-between">
-          <a href="#top" className="flex items-center gap-2 font-serif">
-            <img src={logo} alt="" className="h-10 w-10 rounded-md object-cover" />
-            <span className="text-lg font-bold text-brand-navy leading-tight">
-              {siteConfig.companyName}
-            </span>
-          </a>
-
-          <nav className="hidden md:flex items-center gap-8">
-            {links.map((l) => (
-              <a
-                key={l.href}
-                href={l.href}
-                className="text-sm font-medium text-brand-navy hover:text-brand-gold-dark transition-colors"
-              >
-                {l.label}
-              </a>
-            ))}
-            <a
-              href="#contacto"
-              className="rounded-full bg-brand-gold px-4 py-2 text-sm font-semibold text-brand-navy-dark hover:bg-brand-gold-dark transition-colors"
-            >
-              Cotice con nosotros
-            </a>
-          </nav>
-
-          <button
-            type="button"
-            onClick={() => setOpen((v) => !v)}
-            className="md:hidden inline-flex items-center justify-center rounded-md p-2 text-brand-navy"
-            aria-label="Abrir menú"
-            aria-expanded={open}
+    <AppBar
+      position="sticky"
+      color="primary"
+      elevation={0}
+      sx={{ borderBottom: '1px solid', borderColor: 'primary.dark' }}
+    >
+      <Container maxWidth="lg">
+        <Toolbar disableGutters sx={{ minHeight: 64 }}>
+          <Stack
+            component="a"
+            href="#top"
+            direction="row"
+            spacing={1.25}
+            sx={{ alignItems: 'center', textDecoration: 'none', color: 'inherit', flexGrow: 1 }}
           >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              {open ? (
-                <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" />
-              ) : (
-                <path d="M3 6h18M3 12h18M3 18h18" strokeLinecap="round" />
-              )}
-            </svg>
-          </button>
-        </div>
+            <Logo variant="mark" size={36} />
+            <Typography variant="h6" noWrap sx={{ fontWeight: 800 }}>
+              {siteConfig.companyName}
+            </Typography>
+          </Stack>
 
-        {open && (
-          <nav className="md:hidden flex flex-col gap-1 pb-4">
+          <Stack
+            direction="row"
+            spacing={1}
+            sx={{ alignItems: 'center', display: { xs: 'none', md: 'flex' } }}
+          >
             {links.map((l) => (
-              <a
-                key={l.href}
-                href={l.href}
-                onClick={() => setOpen(false)}
-                className="rounded-md px-3 py-2 text-sm font-medium text-brand-navy hover:bg-brand-cream-dark"
-              >
+              <Button key={l.href} href={l.href} color="inherit" sx={{ fontWeight: 500 }}>
                 {l.label}
-              </a>
+              </Button>
             ))}
-            <a
-              href="#contacto"
-              onClick={() => setOpen(false)}
-              className="rounded-md bg-brand-gold px-3 py-2 text-sm font-semibold text-brand-navy-dark"
-            >
+            <Button href="#contacto" variant="contained" color="secondary" sx={{ ml: 1 }}>
               Cotice con nosotros
-            </a>
-          </nav>
-        )}
-      </div>
-    </header>
+            </Button>
+          </Stack>
+
+          <IconButton
+            color="inherit"
+            edge="end"
+            onClick={() => setOpen(true)}
+            sx={{ display: { xs: 'inline-flex', md: 'none' } }}
+            aria-label="Abrir menú"
+          >
+            <MenuIcon />
+          </IconButton>
+        </Toolbar>
+      </Container>
+
+      <Drawer anchor="right" open={open} onClose={() => setOpen(false)}>
+        <Box sx={{ width: 240 }} role="presentation">
+          <Stack direction="row" spacing={1.25} sx={{ alignItems: 'center', p: 2 }}>
+            <Logo variant="badge" size={32} />
+            <Typography sx={{ fontWeight: 700 }}>{siteConfig.companyName}</Typography>
+          </Stack>
+          <List>
+            {links.map((l) => (
+              <ListItemButton key={l.href} component="a" href={l.href} onClick={() => setOpen(false)}>
+                <ListItemText primary={l.label} />
+              </ListItemButton>
+            ))}
+            <ListItemButton component="a" href="#contacto" onClick={() => setOpen(false)}>
+              <ListItemText primary="Cotice con nosotros" sx={{ color: 'secondary.dark', fontWeight: 700 }} />
+            </ListItemButton>
+          </List>
+        </Box>
+      </Drawer>
+    </AppBar>
   )
 }

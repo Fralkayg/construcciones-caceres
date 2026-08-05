@@ -1,32 +1,50 @@
-import logo from '../assets/logo.png'
+import Box from '@mui/material/Box'
+import Container from '@mui/material/Container'
+import Stack from '@mui/material/Stack'
+import Typography from '@mui/material/Typography'
+import Link from '@mui/material/Link'
+import Divider from '@mui/material/Divider'
+import Logo from './Logo'
 import { siteConfig } from '../siteConfig'
 
 export default function Footer() {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="bg-brand-navy-dark text-brand-cream">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 py-10 flex flex-col sm:flex-row items-center sm:items-start justify-between gap-6">
-        <div className="flex items-center gap-3">
-          <img src={logo} alt="" className="h-10 w-10 rounded-md object-cover" />
-          <div>
-            <p className="font-serif font-bold">{siteConfig.companyName}</p>
-            <p className="text-sm text-brand-cream/70">{siteConfig.region}</p>
-          </div>
-        </div>
+    <Box component="footer" sx={{ bgcolor: 'primary.dark', color: 'white' }}>
+      <Container maxWidth="lg" sx={{ py: 5 }}>
+        <Stack
+          direction={{ xs: 'column', sm: 'row' }}
+          spacing={3}
+          sx={{
+            alignItems: { xs: 'flex-start', sm: 'center' },
+            justifyContent: 'space-between',
+          }}
+        >
+          <Stack direction="row" spacing={1.5} sx={{ alignItems: 'center' }}>
+            <Logo variant="mark" size={36} />
+            <Box>
+              <Typography sx={{ fontWeight: 700 }}>{siteConfig.companyName}</Typography>
+              <Typography variant="body2" sx={{ opacity: 0.7 }}>
+                {siteConfig.region}
+              </Typography>
+            </Box>
+          </Stack>
 
-        <div className="text-sm text-brand-cream/80 flex flex-col gap-1 sm:items-end">
-          <a href={`tel:${siteConfig.phoneWhatsapp}`} className="hover:text-brand-gold">
-            {siteConfig.phone}
-          </a>
-          <a href={`mailto:${siteConfig.email}`} className="hover:text-brand-gold">
-            {siteConfig.email}
-          </a>
-        </div>
-      </div>
-      <div className="border-t border-brand-cream/10 py-4 text-center text-xs text-brand-cream/50">
+          <Stack spacing={0.5} sx={{ alignItems: { xs: 'flex-start', sm: 'flex-end' } }}>
+            <Link href={`tel:${siteConfig.phoneWhatsapp}`} color="inherit" underline="hover" sx={{ opacity: 0.85 }}>
+              {siteConfig.phone}
+            </Link>
+            <Link href={`mailto:${siteConfig.email}`} color="inherit" underline="hover" sx={{ opacity: 0.85 }}>
+              {siteConfig.email}
+            </Link>
+          </Stack>
+        </Stack>
+      </Container>
+      <Divider sx={{ borderColor: 'rgba(255,255,255,0.1)' }} />
+      <Typography variant="caption" align="center" sx={{ display: 'block', py: 2, opacity: 0.5 }}>
         © {year} {siteConfig.companyName}. Todos los derechos reservados.
-      </div>
-    </footer>
+      </Typography>
+    </Box>
   )
 }

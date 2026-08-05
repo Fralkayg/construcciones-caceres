@@ -1,4 +1,12 @@
-import logo from '../assets/logo.png'
+import Box from '@mui/material/Box'
+import Container from '@mui/material/Container'
+import Stack from '@mui/material/Stack'
+import Typography from '@mui/material/Typography'
+import Button from '@mui/material/Button'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import Paper from '@mui/material/Paper'
+import Logo from '../components/Logo'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { siteConfig } from '../siteConfig'
@@ -9,109 +17,146 @@ const whatsappHref = `https://wa.me/${siteConfig.phoneWhatsapp}?text=${encodeURI
 
 export default function Home() {
   return (
-    <div id="top" className="min-h-screen flex flex-col">
+    <Box id="top" sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <Header />
 
-      <main className="flex-1">
+      <Box component="main" sx={{ flex: 1 }}>
         {/* Hero */}
-        <section className="relative overflow-hidden bg-brand-navy text-brand-cream">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6 py-20 sm:py-28 grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <p className="uppercase tracking-widest text-brand-gold text-sm font-semibold mb-4">
-                Más de 10 años de experiencia
-              </p>
-              <h1 className="font-serif text-4xl sm:text-5xl font-bold leading-tight mb-6">
-                {siteConfig.tagline}
-              </h1>
-              <p className="text-lg text-brand-cream/85 mb-8">
-                {siteConfig.taglineSecondary}
-              </p>
-              <div className="flex flex-wrap gap-4">
-                <a
-                  href={whatsappHref}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="rounded-full bg-brand-gold px-6 py-3 font-semibold text-brand-navy-dark hover:bg-brand-gold-dark transition-colors"
+        <Box sx={{ bgcolor: 'primary.main', color: 'white' }}>
+          <Container maxWidth="lg" sx={{ py: { xs: 8, sm: 12 } }}>
+            <Box
+              sx={{
+                display: 'grid',
+                gridTemplateColumns: { xs: '1fr', md: '1.1fr 0.9fr' },
+                gap: { xs: 6, md: 8 },
+                alignItems: 'center',
+              }}
+            >
+              <Box>
+                <Typography
+                  variant="overline"
+                  sx={{ color: 'secondary.main', fontWeight: 700, letterSpacing: 2 }}
                 >
-                  Cotice con nosotros
-                </a>
-                <a
-                  href="#servicios"
-                  className="rounded-full border border-brand-cream/40 px-6 py-3 font-semibold text-brand-cream hover:bg-brand-cream/10 transition-colors"
+                  Más de 10 años de experiencia
+                </Typography>
+                <Typography variant="h2" sx={{ fontSize: { xs: '2.25rem', sm: '3rem' }, mb: 3, lineHeight: 1.15 }}>
+                  {siteConfig.tagline}
+                </Typography>
+                <Typography variant="h6" sx={{ fontWeight: 400, opacity: 0.85, mb: 4 }}>
+                  {siteConfig.taglineSecondary}
+                </Typography>
+                <Stack direction="row" spacing={2} useFlexGap sx={{ flexWrap: 'wrap' }}>
+                  <Button
+                    href={whatsappHref}
+                    target="_blank"
+                    rel="noreferrer"
+                    variant="contained"
+                    color="secondary"
+                    size="large"
+                  >
+                    Cotice con nosotros
+                  </Button>
+                  <Button
+                    href="#servicios"
+                    variant="outlined"
+                    size="large"
+                    sx={{ color: 'white', borderColor: 'rgba(255,255,255,0.4)' }}
+                  >
+                    Ver servicios
+                  </Button>
+                </Stack>
+              </Box>
+
+              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                <Paper
+                  elevation={0}
+                  sx={{
+                    p: 5,
+                    borderRadius: 4,
+                    bgcolor: 'rgba(255,255,255,0.06)',
+                    border: '1px solid rgba(255,255,255,0.12)',
+                  }}
                 >
-                  Ver servicios
-                </a>
-              </div>
-            </div>
-            <div className="flex justify-center">
-              <img
-                src={logo}
-                alt={siteConfig.companyName}
-                className="w-64 sm:w-80 rounded-2xl shadow-2xl"
-              />
-            </div>
-          </div>
-        </section>
+                  <Logo variant="badge" size={200} />
+                </Paper>
+              </Box>
+            </Box>
+          </Container>
+        </Box>
 
         {/* Nosotros */}
-        <section id="nosotros" className="mx-auto max-w-4xl px-4 sm:px-6 py-20 text-center">
-          <h2 className="font-serif text-3xl font-bold text-brand-navy mb-6">Nosotros</h2>
-          <p className="text-lg leading-relaxed text-brand-ink/80">{siteConfig.about}</p>
-        </section>
+        <Container maxWidth="md" sx={{ py: { xs: 8, sm: 10 }, textAlign: 'center' }}>
+          <Typography variant="h3" sx={{ color: 'primary.main', mb: 3, fontSize: { xs: '1.9rem', sm: '2.4rem' } }}>
+            Nosotros
+          </Typography>
+          <Typography variant="h6" sx={{ fontWeight: 400, lineHeight: 1.7, color: 'text.secondary' }}>
+            {siteConfig.about}
+          </Typography>
+        </Container>
 
         {/* Servicios */}
-        <section id="servicios" className="bg-brand-cream-dark/60 py-20">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6">
-            <h2 className="font-serif text-3xl font-bold text-brand-navy mb-12 text-center">
+        <Box id="servicios" sx={{ bgcolor: 'background.default', py: { xs: 8, sm: 10 } }}>
+          <Container maxWidth="lg">
+            <Typography
+              variant="h3"
+              sx={{ color: 'primary.main', mb: 6, textAlign: 'center', fontSize: { xs: '1.9rem', sm: '2.4rem' } }}
+            >
               Nuestros Servicios
-            </h2>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            </Typography>
+            <Box
+              sx={{
+                display: 'grid',
+                gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr', lg: '1fr 1fr 1fr' },
+                gap: 3,
+              }}
+            >
               {siteConfig.services.map((s) => (
-                <div
-                  key={s.title}
-                  className="rounded-xl bg-white p-6 shadow-sm border border-brand-navy/5"
-                >
-                  <h3 className="font-serif text-xl font-semibold text-brand-navy mb-2">
-                    {s.title}
-                  </h3>
-                  <p className="text-brand-ink/70 text-sm leading-relaxed">{s.description}</p>
-                </div>
+                <Card key={s.title} variant="outlined" sx={{ borderColor: 'divider' }}>
+                  <CardContent>
+                    <Typography variant="h6" sx={{ color: 'primary.main', mb: 1 }}>
+                      {s.title}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.6 }}>
+                      {s.description}
+                    </Typography>
+                  </CardContent>
+                </Card>
               ))}
-            </div>
-          </div>
-        </section>
+            </Box>
+          </Container>
+        </Box>
 
         {/* Contacto */}
-        <section id="contacto" className="mx-auto max-w-4xl px-4 sm:px-6 py-20 text-center">
-          <h2 className="font-serif text-3xl font-bold text-brand-navy mb-4">Cotice con nosotros</h2>
-          <p className="text-brand-ink/70 mb-10 max-w-xl mx-auto">
-            Cuéntanos qué necesitas y te responderemos a la brevedad. Trabajamos en{' '}
-            {siteConfig.region}.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <a
-              href={whatsappHref}
-              target="_blank"
-              rel="noreferrer"
-              className="rounded-full bg-brand-gold px-6 py-3 font-semibold text-brand-navy-dark hover:bg-brand-gold-dark transition-colors"
-            >
+        <Container id="contacto" maxWidth="sm" sx={{ py: { xs: 8, sm: 10 }, textAlign: 'center' }}>
+          <Typography variant="h3" sx={{ color: 'primary.main', mb: 2, fontSize: { xs: '1.9rem', sm: '2.4rem' } }}>
+            Cotice con nosotros
+          </Typography>
+          <Typography color="text.secondary" sx={{ mb: 5 }}>
+            Cuéntanos qué necesitas y te responderemos a la brevedad. Trabajamos en {siteConfig.region}.
+          </Typography>
+          <Stack
+            direction="row"
+            spacing={2}
+            useFlexGap
+            sx={{ justifyContent: 'center', flexWrap: 'wrap', mb: 4 }}
+          >
+            <Button href={whatsappHref} target="_blank" rel="noreferrer" variant="contained" color="secondary" size="large">
               Escribir por WhatsApp
-            </a>
-            <a
-              href={`mailto:${siteConfig.email}`}
-              className="rounded-full border border-brand-navy/20 px-6 py-3 font-semibold text-brand-navy hover:bg-brand-navy/5 transition-colors"
-            >
+            </Button>
+            <Button href={`mailto:${siteConfig.email}`} variant="outlined" size="large">
               Enviar un correo
-            </a>
-          </div>
-          <div className="mt-8 text-sm text-brand-ink/60">
-            <p>{siteConfig.phone}</p>
-            <p>{siteConfig.email}</p>
-          </div>
-        </section>
-      </main>
+            </Button>
+          </Stack>
+          <Typography variant="body2" color="text.secondary">
+            {siteConfig.phone}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            {siteConfig.email}
+          </Typography>
+        </Container>
+      </Box>
 
       <Footer />
-    </div>
+    </Box>
   )
 }
