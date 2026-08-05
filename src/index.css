@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: system-ui, "Segoe UI", Roboto, sans-serif;
+  --font-serif: Georgia, "Times New Roman", serif;
+
+  /* Brand palette pulled from the Construcciones Cáceres logo */
+  --color-brand-navy: #1f3a5c;
+  --color-brand-navy-dark: #142944;
+  --color-brand-navy-light: #2f5480;
+  --color-brand-gold: #d4a13d;
+  --color-brand-gold-dark: #b9862a;
+  --color-brand-cream: #f6f1e6;
+  --color-brand-cream-dark: #ece3cf;
+  --color-brand-ink: #201c14;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  color: var(--color-brand-ink);
+  background: var(--color-brand-cream);
+  font-family: var(--font-sans);
+}
