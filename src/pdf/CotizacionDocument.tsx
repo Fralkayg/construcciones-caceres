@@ -1,8 +1,47 @@
-import { Document, Page, Text, View, Image, StyleSheet } from '@react-pdf/renderer'
+import { Document, Page, Text, View, Svg, Path, Rect, StyleSheet } from '@react-pdf/renderer'
 import type { Cotizacion } from '../types'
 import { formatCLP, formatFechaLarga } from '../lib/format'
 import { siteConfig } from '../siteConfig'
-import logo from '../assets/logo.png'
+import {
+  LOGO_VIEWBOX,
+  LOGO_BADGE_RECT,
+  LOGO_HOUSE_PATH,
+  LOGO_GROUND_PATH,
+  LOGO_WINDOW_RECT,
+  LOGO_COLORS,
+} from '../assets/logoShape'
+
+function LogoSvg() {
+  return (
+    <Svg width={40} height={40} viewBox={LOGO_VIEWBOX}>
+      <Rect
+        x={LOGO_BADGE_RECT.x}
+        y={LOGO_BADGE_RECT.y}
+        width={LOGO_BADGE_RECT.width}
+        height={LOGO_BADGE_RECT.height}
+        rx={LOGO_BADGE_RECT.rx}
+        fill={LOGO_COLORS.navy}
+      />
+      <Path
+        d={LOGO_HOUSE_PATH}
+        fill="none"
+        stroke={LOGO_COLORS.white}
+        strokeWidth={5}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <Path d={LOGO_GROUND_PATH} fill="none" stroke={LOGO_COLORS.amber} strokeWidth={5} strokeLinecap="round" />
+      <Rect
+        x={LOGO_WINDOW_RECT.x}
+        y={LOGO_WINDOW_RECT.y}
+        width={LOGO_WINDOW_RECT.width}
+        height={LOGO_WINDOW_RECT.height}
+        rx={LOGO_WINDOW_RECT.rx}
+        fill={LOGO_COLORS.amber}
+      />
+    </Svg>
+  )
+}
 
 const styles = StyleSheet.create({
   page: {
@@ -11,47 +50,44 @@ const styles = StyleSheet.create({
     paddingHorizontal: 48,
     fontSize: 10.5,
     fontFamily: 'Helvetica',
-    color: '#201c14',
+    color: '#1a1f29',
   },
   headerRow: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 20,
     borderBottomWidth: 2,
-    borderBottomColor: '#1f3a5c',
+    borderBottomColor: '#142236',
     paddingBottom: 12,
   },
   logo: {
-    width: 46,
-    height: 46,
-    borderRadius: 4,
     marginRight: 12,
   },
   headerCompany: {
     fontSize: 14,
     fontWeight: 700,
-    color: '#1f3a5c',
+    color: '#142236',
   },
   headerContact: {
     fontSize: 8.5,
-    color: '#555',
+    color: '#5b6472',
     marginTop: 2,
   },
   title: {
     fontSize: 16,
     fontWeight: 700,
-    color: '#1f3a5c',
+    color: '#142236',
     marginBottom: 4,
   },
   meta: {
     fontSize: 9,
-    color: '#555',
+    color: '#5b6472',
     marginBottom: 16,
   },
   sectionTitle: {
     fontSize: 11.5,
     fontWeight: 700,
-    color: '#1f3a5c',
+    color: '#142236',
     marginTop: 16,
     marginBottom: 6,
   },
@@ -82,19 +118,19 @@ const styles = StyleSheet.create({
   nota: {
     fontSize: 9,
     fontStyle: 'italic',
-    color: '#555',
+    color: '#5b6472',
     marginTop: 2,
     marginBottom: 4,
   },
   table: {
     marginTop: 6,
     borderWidth: 1,
-    borderColor: '#c9c2ab',
+    borderColor: '#e3e6eb',
   },
   tableRow: {
     flexDirection: 'row',
     borderBottomWidth: 1,
-    borderBottomColor: '#c9c2ab',
+    borderBottomColor: '#e3e6eb',
   },
   tableRowLast: {
     flexDirection: 'row',
@@ -103,7 +139,7 @@ const styles = StyleSheet.create({
     fontSize: 9.5,
     fontWeight: 700,
     color: '#fff',
-    backgroundColor: '#1f3a5c',
+    backgroundColor: '#142236',
     padding: 6,
   },
   tableCell: {
@@ -115,7 +151,7 @@ const styles = StyleSheet.create({
   colValor: { width: '25%', textAlign: 'right' },
   totalRow: {
     flexDirection: 'row',
-    backgroundColor: '#ece3cf',
+    backgroundColor: '#fbead0',
   },
   totalLabel: {
     width: '75%',
@@ -159,10 +195,10 @@ const styles = StyleSheet.create({
     left: 48,
     right: 48,
     borderTopWidth: 1,
-    borderTopColor: '#e5e0cf',
+    borderTopColor: '#e3e6eb',
     paddingTop: 6,
     fontSize: 8,
-    color: '#888',
+    color: '#8a92a1',
     textAlign: 'center',
   },
 })
@@ -177,7 +213,9 @@ export default function CotizacionDocument({ data }: { data: Cotizacion }) {
     >
       <Page size="A4" style={styles.page}>
         <View style={styles.headerRow}>
-          <Image src={logo} style={styles.logo} />
+          <View style={styles.logo}>
+            <LogoSvg />
+          </View>
           <View>
             <Text style={styles.headerCompany}>{siteConfig.companyName}</Text>
             <Text style={styles.headerContact}>
