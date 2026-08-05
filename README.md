@@ -49,6 +49,28 @@ npm run preview   # sirve dist/ localmente para revisar el build
 `dist/` es un sitio 100% estático: se puede desplegar en Vercel,
 Netlify, GitHub Pages o cualquier hosting de archivos estáticos.
 
+## Despliegue en GitHub Pages
+
+`.github/workflows/deploy.yml` construye y publica el sitio en GitHub
+Pages automáticamente en cada push a `main`. Dos detalles necesarios
+porque GitHub Pages sirve este repo desde `/construcciones-caceres/`
+(no desde la raíz del dominio):
+
+- El build de ese workflow pasa `BASE_PATH=/construcciones-caceres/`,
+  que `vite.config.ts` usa como `base` (assets) y que `main.tsx` reusa
+  como `basename` del router (rutas). Sin esto, ni los archivos ni las
+  rutas cargarían bien bajo el subpath. Localmente y en otros hosts
+  (Vercel/Netlify, que sirven desde la raíz) no hace falta setearlo.
+- El workflow copia `index.html` a `404.html` en `dist/` para que las
+  rutas del lado del cliente (incluida la URL no listada del
+  cotizador) funcionen al abrirlas directamente, ya que GitHub Pages
+  no tiene servidor que redirija todo a `index.html`.
+
+**Configuración única en el repo**: en GitHub, ir a *Settings → Pages*
+y en "Build and deployment" elegir **Source: GitHub Actions** (en vez
+de "Deploy from a branch"). Sin este paso el workflow corre pero el
+sitio no queda publicado.
+
 ## Personalización rápida
 
 - **Textos, contacto, servicios**: `src/siteConfig.ts`
